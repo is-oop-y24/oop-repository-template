@@ -45,6 +45,9 @@ dotnet_diagnostic.SA1309.severity = silent
 
 # SA1633: File should have header
 dotnet_diagnostic.SA1633.severity = none
+csharp_new_line_before_open_brace=all
+csharp_space_between_method_declaration_parameter_list_parentheses=true
+csharp_new_line_before_members_in_object_initializers=false
 
 [*.{cs,vb}]
 dotnet_style_prefer_auto_properties=true:suggestion
@@ -72,3 +75,6 @@ dotnet_diagnostic.IDE0040.severity = warning
 
 # SA0001: XML comment analysis disabled
 dotnet_diagnostic.SA0001.severity = none
+
+# SA1500: Braces for multi-line statements should not share line
+dotnet_diagnostic.SA1500.severity = error

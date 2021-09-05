@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace Isu.Tools
 {
@@ -14,10 +13,6 @@ namespace Isu.Tools
         }
 
         public IsuException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected IsuException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }
