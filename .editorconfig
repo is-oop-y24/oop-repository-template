@@ -17,7 +17,7 @@ dotnet_style_require_accessibility_modifiers = always
 
 # IDE0090: Use 'new(...)'
 csharp_style_implicit_object_creation_when_type_is_apparent = false
-csharp_preserve_single_line_blocks=false
+csharp_preserve_single_line_blocks=true
 csharp_using_directive_placement=outside_namespace:warning
 csharp_style_unused_value_assignment_preference=discard_variable:error
 csharp_prefer_static_local_function=true:warning
