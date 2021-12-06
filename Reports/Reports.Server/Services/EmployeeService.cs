@@ -1,24 +1,36 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Reports.DAL.Entities;
 using Reports.Server.Controllers;
+using Reports.Server.Database;
 
 namespace Reports.Server.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        public Employee Create(string name)
+        private const string dbPath = "employees.json";
+        private readonly ReportsDatabaseContext _context;
+
+        public EmployeeService(ReportsDatabaseContext context) {
+            _context = context;
+        }
+
+        public async Task<Employee> Create(string name)
         {
-            return new Employee(Guid.NewGuid(), name);
+            var employee = new Employee(Guid.NewGuid(), name);
+            var employeeFromDb = await _context.Employees.AddAsync(employee);
+            await _context.SaveChangesAsync();
+            return employee;
         }
 
         public Employee FindByName(string name)
         {
-            if (name.Equals("Aboba", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return new Employee(Guid.NewGuid(), name);
-            }
-
-            return null;
+            return JsonConvert.DeserializeObject<Employee[]>(File.ReadAllText(dbPath, Encoding.UTF8))
+                .FirstOrDefault(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public Employee FindById(Guid id)

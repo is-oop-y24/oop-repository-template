@@ -4,9 +4,13 @@ namespace Reports.DAL.Entities
 {
     public class Employee
     {
-        public Guid Id { get; }
+        public Guid Id { get; private init; }
 
-        public string Name { get; }
+        public string Name { get; private init; }
+
+        private Employee()
+        {
+        }
 
         public Employee(Guid id, string name)
         {

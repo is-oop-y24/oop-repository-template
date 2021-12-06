@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Reports.Server.Controllers;
+using Reports.Server.Database;
 using Reports.Server.Services;
 
 namespace Reports.Server
@@ -40,6 +42,10 @@ namespace Reports.Server
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Reports.Server", Version = "v1" });
             });
 
+            services.AddDbContext<ReportsDatabaseContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration.GetConnectionString("MyServer"));
+            });
             services.AddScoped<IEmployeeService, EmployeeService>();
         }
 

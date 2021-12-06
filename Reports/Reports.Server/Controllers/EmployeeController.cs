@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Reports.DAL.Entities;
 using Reports.Server.Services;
@@ -18,9 +20,9 @@ namespace Reports.Server.Controllers
         }
 
         [HttpPost]
-        public Employee Create([FromQuery] string name)
+        public async Task<Employee> Create([FromQuery] string name)
         {
-            return _service.Create(name);
+            return await _service.Create(name);
         }
 
         [HttpGet]
