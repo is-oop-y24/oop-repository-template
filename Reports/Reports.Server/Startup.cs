@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -42,6 +43,10 @@ namespace Reports.Server
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Reports.Server", Version = "v1" });
             });
 
+            services
+                .AddAuthentication("EmployeeAuthorization")
+                .AddScheme<AuthenticationSchemeOptions, EmployeeAuthenticationHandler>("EmployeeAuthorization", null);
+
             services.AddDbContext<ReportsDatabaseContext>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("MyServer"));
@@ -63,6 +68,7 @@ namespace Reports.Server
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
